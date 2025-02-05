@@ -17,7 +17,7 @@ export class MarkmapEntity {
   name: string;
 
   @ManyToOne(() => UserEntity, (user) => user.markmaps)
-  user: UserEntity;
+  user?: Pick<UserEntity, 'id'>;
 
   @Column({ type: 'text', nullable: false })
   code: string;

@@ -88,7 +88,7 @@
 }
 
 .register-main-form label:first-child {
-  margin: 0;
+  margin: 60px 0 0;
 }
 
 .register-main-form label {
@@ -113,7 +113,7 @@
 .register-main-form input[type="button"] {
   width: 40%;
   margin: auto;
-  font-size: 32px;
+  font-size: 24px;
   border-radius: 12px;
   padding: 10px;
   border: none;
@@ -122,9 +122,41 @@
   color: var(--text);
   cursor: pointer;
   transition: all 500ms ease-in-out;
+  margin-top: 20px;
+  text-wrap: wrap;
 }
 
 .register-main-form input[type="button"]:hover {
   background-color: var(--text);
   color: var(--bg);
+}
+
+@media (max-width: 1350px) {
+  .register-main {
+    flex-direction: column;
+  }
+
+  .register-main-form {
+    align-items: center;
+  }
+
+  .register-main-form label:first-child {
+    margin: 10px 0 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .register-main {
+    width: 65%;
+  }
+}
+
+@media (max-width: 700px) {
+  .register-main {
+    width: 100%;
+  }
+
+  .register-main-form input:not([type="button"]) {
+    width: 70%;
+  }
 }

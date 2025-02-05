@@ -5,6 +5,7 @@ import {
   IsNumber,
   MaxLength,
 } from 'class-validator';
+import { UserEntity } from 'src/entities/user.entity';
 
 export class MarkmapDto {
   @IsString()
@@ -14,8 +15,8 @@ export class MarkmapDto {
 
   @IsString()
   @IsNotEmpty()
-  @IsUUID('1')
-  user: string;
+  @IsUUID('4')
+  user: UserEntity;
 
   @IsString()
   @IsNotEmpty()
@@ -24,3 +25,7 @@ export class MarkmapDto {
   @IsNumber({ allowNaN: false, allowInfinity: false, maxDecimalPlaces: 0 })
   public: number;
 }
+
+export type UpdateMarkmapDto = Partial<MarkmapDto>;
+
+export type MarkmapUserId = Pick<UserEntity, 'id'>;
