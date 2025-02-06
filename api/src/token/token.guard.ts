@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
-export class UserGuard implements CanActivate {
+export class TokenGuard implements CanActivate {
   constructor(private readonly jwtService: JwtService) {}
   canActivate(
     context: ExecutionContext,

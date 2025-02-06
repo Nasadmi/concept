@@ -6,11 +6,11 @@ import '../styles/Register.css';
 export const Register: FC = () => {
     const visit = useRef(getCookie('first_visit'))
 
-    /* useEffect(() => {
+    useEffect(() => {
       if (!visit.current) {
         createCookie({ name: 'first_visit', value: '1' })
       }
-    }, []) */
+    }, [])
 
     return (
         <div className='register-main'>

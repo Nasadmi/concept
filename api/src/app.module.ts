@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { LoggerModule } from 'nestjs-pino';
 import { render } from 'prettyjson';
 import { APP_PIPE } from '@nestjs/core';
+import { MarkmapModule } from './markmap/markmap.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { APP_PIPE } from '@nestjs/core';
       },
     }),
     UserModule,
+    MarkmapModule,
   ],
   providers: [
     {
