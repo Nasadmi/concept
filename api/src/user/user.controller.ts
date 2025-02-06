@@ -14,7 +14,7 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { UserGuard } from './user.guard';
+import { TokenGuard } from '../token/token.guard';
 import { UserService } from './user.service';
 import { isUUID } from 'class-validator';
 import { UpdateUserDto, UserDto } from 'src/dto/users.dto';
@@ -81,7 +81,7 @@ export class UserController {
     return { tk: token };
   }
 
-  @UseGuards(UserGuard)
+  @UseGuards(TokenGuard)
   @Delete()
   async deleteUser(@Headers('bearer') bearer: { id: string }) {
     const { id } = bearer;
@@ -96,7 +96,7 @@ export class UserController {
     }
   }
 
-  @UseGuards(UserGuard)
+  @UseGuards(TokenGuard)
   @Put()
   async updateUser(
     @Headers('bearer') bearer: { id: string },
