@@ -1,6 +1,7 @@
 export const getCookie = (name: string) => {
-  const cookie = document.cookie.match('(^|;)\\s*' + name + '=([^;]*)');
-  return cookie ? cookie.pop() : null;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift();
 }
 
 export const createCookie = ({ name, value, days }: { name: string; value: string; days?: number }) => {
