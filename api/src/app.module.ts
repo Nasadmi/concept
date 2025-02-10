@@ -23,7 +23,7 @@ import { AppController } from './app.controller';
       port: parseInt(process.env.DB_PORT || '3306'),
       username: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD || '',
-      database: process.env.DB_NAME || 'metalk',
+      database: process.env.DB_NAME || 'concept',
       entities: [UserEntity, MarkmapEntity],
       synchronize: process.env.NODE_ENV === 'dev',
     }),
