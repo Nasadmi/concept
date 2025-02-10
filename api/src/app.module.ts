@@ -10,6 +10,7 @@ import { LoggerModule } from 'nestjs-pino';
 import { render } from 'prettyjson';
 import { APP_PIPE } from '@nestjs/core';
 import { MarkmapModule } from './markmap/markmap.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { MarkmapModule } from './markmap/markmap.module';
       }),
     },
   ],
+  controllers: [AppController],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}

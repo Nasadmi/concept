@@ -98,7 +98,7 @@
   color: var(--border-bg);
 }
 
-.register-main-form input:not([type="button"]) {
+.register-main-form input:not([type="submit"]) {
   padding: 5px;
   border-radius: 6px;
   outline: none;
@@ -110,7 +110,7 @@
   font-weight: 700;
 }
 
-.register-main-form input[type="button"] {
+.register-main-form input[type="submit"] {
   width: 40%;
   margin: auto;
   font-size: 24px;
@@ -126,7 +126,7 @@
   text-wrap: wrap;
 }
 
-.register-main-form input[type="button"]:hover {
+.register-main-form input[type="submit"]:hover {
   background-color: var(--text);
   color: var(--bg);
 }
@@ -141,7 +141,7 @@
   }
 
   .register-main-form label:first-child {
-    margin: 10px 0 0;
+    margin: 5px 0 0;
   }
 }
 
@@ -156,7 +156,7 @@
     width: 100%;
   }
 
-  .register-main-form input:not([type="button"]) {
+  .register-main-form input:not([type="submit"]) {
     width: 70%;
   }
 }

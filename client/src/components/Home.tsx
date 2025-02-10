@@ -4,12 +4,14 @@ import { Register } from './Register';
 import { Login } from './Login';
 import '../styles/Home.css'
 
-export function Home() {
+export function Home({ type }: { type?: 'signin' | 'login' }) {
   const visit = useRef(getCookie('first_visit'));
   return (
     <main className='home-main'>
       {
-        !visit.current ? <Register /> : <Login />
+        typeof type !== 'undefined' ? 
+        type === 'signin' ? <Register /> : <Login />
+        :  !visit.current ? <Register /> : <Login />
       }
     </main>
   )

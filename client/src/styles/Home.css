@@ -5,3 +5,12 @@
   justify-content: center;
   min-height: 100%;
 }
+
+.link-form-type {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  text-align: center;
+}

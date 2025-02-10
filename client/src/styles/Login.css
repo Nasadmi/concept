@@ -98,7 +98,7 @@
   color: var(--border-bg);
 }
 
-.login-main-form input:not([type="button"]) {
+.login-main-form input:not([type="submit"]) {
   padding: 5px;
   border-radius: 6px;
   outline: none;
@@ -110,7 +110,7 @@
   font-weight: 700;
 }
 
-.login-main-form input[type="button"] {
+.login-main-form input[type="submit"] {
   width: 40%;
   margin: auto;
   font-size: 24px;
@@ -126,7 +126,7 @@
   text-wrap: wrap;
 }
 
-.login-main-form input[type="button"]:hover {
+.login-main-form input[type="submit"]:hover {
   background-color: var(--text);
   color: var(--bg);
 }
@@ -161,7 +161,7 @@
     width: 100%;
   }
 
-  .login-main-form input:not([type="button"]) {
+  .login-main-form input:not([type="submit"]) {
     width: 70%;
   }
 }

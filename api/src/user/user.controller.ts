@@ -6,9 +6,10 @@ import {
   Delete,
   Get,
   Headers,
+  HttpException,
+  HttpStatus,
   InternalServerErrorException,
   NotFoundException,
-  Param,
   Post,
   Put,
   UnauthorizedException,
@@ -23,13 +24,14 @@ import { UpdateUserDto, UserDto } from 'src/dto/users.dto';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get('get/:id')
-  async getById(@Param('id') userid: string) {
-    if (!isUUID(userid, '4')) {
+  @Get('info')
+  @UseGuards(TokenGuard)
+  async getById(@Headers('bearer') userid: { id: string }) {
+    if (!isUUID(userid.id, '4')) {
       throw new BadRequestException('UUID invalid');
     }
 
-    const user = await this.userService.findUserById(userid);
+    const user = await this.userService.findUserById(userid.id);
 
     if (user === 0) {
       throw new InternalServerErrorException('Something went wrong');
@@ -40,7 +42,7 @@ export class UserController {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, email, ...rest } = user;
+    const { password, ...rest } = user;
 
     return rest;
   }
@@ -56,11 +58,12 @@ export class UserController {
       console.error(newUser);
       throw new InternalServerErrorException('Something went wrong');
     }
+
+    throw new HttpException('User created', HttpStatus.CREATED);
   }
 
-  @Get('login')
-  async login(@Body() user: { email: string; password: string }) {
-    console.log('token');
+  @Post('login')
+  async login(@Body() user: Pick<UserDto, 'email' | 'password'>) {
     const token = await this.userService.getToken({
       email: user.email,
       password: user.password,
@@ -78,7 +81,7 @@ export class UserController {
       throw new UnauthorizedException('Password or email incorrect');
     }
 
-    return { tk: token };
+    throw new HttpException(`${token}`, HttpStatus.OK);
   }
 
   @UseGuards(TokenGuard)
