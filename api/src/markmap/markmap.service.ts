@@ -20,11 +20,37 @@ export class MarkmapService {
     }
   }
 
-  async getMarkmapByName(name: string) {
+  async findMarkmap({
+    name,
+    order,
+    username,
+  }: {
+    name: string;
+    order: 'stars' | 'date';
+    username?: string;
+  }): Promise<MarkmapEntity[] | null | 0> {
     try {
       const founded = await this.markmapRepository.find({
-        where: { name, public: 1 },
+        where: {
+          name,
+          public: 1,
+          ...(username && {
+            user: {
+              username,
+            },
+          }),
+        },
         relations: { user: true },
+        order: {
+          ...(order === 'date'
+            ? {
+                created_at: 'ASC',
+              }
+            : {
+                stars: 'ASC',
+              }),
+        },
+        take: 25,
       });
       if (founded.length === 0) {
         return null;
@@ -54,21 +80,26 @@ export class MarkmapService {
     }
   }
 
-  async updateMarkmap(markmapId: string, markmap: UpdateMarkmapDto) {
+  async updateMarkmap(
+    user: string,
+    markmapId: string,
+    markmap: UpdateMarkmapDto,
+  ) {
     try {
-      return await this.markmapRepository.update({ id: markmapId }, markmap);
+      return await this.markmapRepository.update(
+        { id: markmapId, user: { id: user } },
+        markmap,
+      );
     } catch (err) {
       console.error(err);
       return 0;
     }
   }
 
-  async deleteMarkmap(markmapId: string) {
-    try {
-      return await this.markmapRepository.delete({ id: markmapId });
-    } catch (err) {
-      console.error(err);
-      return 0;
-    }
+  async deleteMarkmap(markmapId: string, userId: string) {
+    return await this.markmapRepository.delete({
+      id: markmapId,
+      user: { id: userId },
+    });
   }
 }
