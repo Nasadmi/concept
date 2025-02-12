@@ -66,7 +66,8 @@ export class MarkmapService {
     try {
       const founded = await this.markmapRepository.find({
         where: { user: { id: user } },
-        relations: { user: true },
+        select: ['id', 'name', 'public', 'stars', 'created_at', 'updated_at'],
+        relations: { user: false },
       });
 
       if (founded.length === 0) {
