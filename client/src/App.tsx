@@ -1,6 +1,7 @@
 import './App.css'
 import { Home } from './components/Home';
 import { HomeUser } from './components/HomeUser';
+import { TabProvider } from './providers/Tab.provider';
 import { getCookie } from './service/cookie.service'
 
 export function App() {
@@ -9,7 +10,9 @@ export function App() {
     !bearer ? 
       <Home />
     :
-      <HomeUser token={ bearer } />
+      <TabProvider>
+        <HomeUser token={ bearer } />
+      </TabProvider>
   )
 }
 

@@ -1,0 +1,23 @@
+#theme-selector {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 19px;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: all 250ms ease-in-out;
+}
+
+html.dark #theme-selector:hover {
+  color: #A594F9;
+  background-color: #E5D9F2;
+}
+
+html.light #theme-selector:hover {
+  color: #FFF6E0;
+  background-color: #272829;
+}
