@@ -26,6 +26,13 @@ body,
   --text: #A594F9;
 }
 
+:root.light {
+  --bg: #E5D9F2;
+  --block-bg: #F5EFFF;
+  --border-bg: #CDC1FF;
+  --text: #A594F9;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #272829;

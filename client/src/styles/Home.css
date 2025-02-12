@@ -14,3 +14,8 @@
   text-decoration: none;
   text-align: center;
 }
+
+.flex-center {
+  display: flex;
+  flex-direction: column;
+}
