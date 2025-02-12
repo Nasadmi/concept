@@ -42,7 +42,7 @@ export class UserController {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...rest } = user;
+    const { password, email, ...rest } = user;
 
     return rest;
   }
