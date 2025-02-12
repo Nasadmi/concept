@@ -73,6 +73,7 @@ export const Register: FC = () => {
           <div className="register-main-banner">
             <h1 className='maven_pro register-banner-title'>Sign In</h1>
           </div>
+          <div className='flex-center'>
           <form className='register-main-form maven_pro' onSubmit={handleSubmit}>
             <label htmlFor="username">Username</label>
             <input type="text" name="username" id="username" autoComplete='off' spellCheck='false'className='ubuntu'/>
@@ -83,6 +84,7 @@ export const Register: FC = () => {
             <input type="submit" value="Sign In" className='ubuntu' />
           </form>
           <Link to="/login" className='link-form-type ubuntu'>Do you have an account? Log In</Link>
+          </div>
         </div>
     );
 }

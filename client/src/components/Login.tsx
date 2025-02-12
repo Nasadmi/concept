@@ -54,6 +54,7 @@ export const Login: FC = () => {
       <div className="login-main-banner">
         <h1 className='maven_pro login-banner-title'>Log In</h1>
       </div>
+      <div className='flex-center'>
       <form className='login-main-form maven_pro' onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input type="email" name="email" id="email" autoComplete='off' spellCheck='false'className='ubuntu'/>
@@ -62,6 +63,7 @@ export const Login: FC = () => {
         <input type="submit" value="Log In" className='ubuntu' />
       </form>
       <Link to="/signin" className='link-form-type maven_pro'>Don't you have an account? Sign In</Link>
+      </div>
     </div>
 );
 }
