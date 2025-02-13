@@ -10,7 +10,7 @@ import { Configuration } from './Configuration';
 export function HomeUser({ token }: { token: string }) {
   const [info, setInfo] = useState<Pick<UserInterface, 'created_at' | 'username' | 'id' > | null>(null);
   const [mkm, setMkm] = useState<MkmType[] | null>(null);
-  const loadedMkm = useRef<MkmType[] | null>(sessionStorage.getItem('loadedMkm') ? JSON.parse(sessionStorage.getItem('loadedMkm') as string) : null);
+  const loadedMkm = useRef<MkmType[] | null>(sessionStorage.getItem('loadedMkm') ? (JSON.parse(sessionStorage.getItem('loadedMkm') as string).statusCode ? [] : JSON.parse(sessionStorage.getItem('loadedMkm') as string)) : null);
   const loadedInfo = useRef<Pick<UserInterface, 'created_at' | 'username' | 'id' > | null>(sessionStorage.getItem('loadedInfo') ? JSON.parse(sessionStorage.getItem('loadedInfo') as string) : null)
   const ctx = useContext(TabContext);
 
@@ -43,7 +43,6 @@ export function HomeUser({ token }: { token: string }) {
     }
 
     if (tab === 'mkm' && !loadedMkm.current) {
-      console.log('pp')
       fetchingMarkmap({
         url: 'user',
         bearer: token,
@@ -51,6 +50,9 @@ export function HomeUser({ token }: { token: string }) {
       })
       .then((response) => response.json())
       .then((res) => {
+        if (res.statusCode === 404) {
+          setMkm(null);
+        }
         setMkm(res);
         sessionStorage.setItem('loadedMkm', JSON.stringify(res));
       })
