@@ -4,8 +4,13 @@ export interface MkmType {
   code?: string;
   public: 0 | 1;
   stars: number;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
+  user: {
+    username: string;
+  }
 }
 
 export type PMkmType = Partial<MkmType>
+
+export type QMkmType = Pick<MkmType, 'created_at' | 'updated_at' | 'id' | 'name' | 'public' | 'stars' | 'user'>
