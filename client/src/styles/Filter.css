@@ -1,0 +1,81 @@
+.filter-main {
+  position: relative;
+}
+
+.filter-main .filter-btn {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  gap: 5px;
+  padding: 5px;
+  border-radius: 6px;
+  border: 2px solid var(--border-bg);
+  background-color: var(--block-bg);
+  color: var(--text);
+  font-weight: 500;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.filter-main .filter-data {
+  position: absolute;
+  top: -120px;
+  left: 0;
+  background-color: var(--block-bg);
+  padding: 10px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  transform: translateX(-200px);
+  transition: transform 1s ease;
+}
+
+.filter-main .filter-data.show {
+  transform: translateX(0);
+}
+
+.filter-main .filter-data div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.filter-main .filter-data input {
+  width: 70px;
+  background-color: var(--bg);
+  color: var(--text);
+  border-radius: 6px;
+  text-align: center;
+  border: none;
+  font-size: 18px;
+  outline: none;
+  padding: 5px;
+  text-align: center;
+}
+
+.filter-main .filter-data select {
+  appearance: none;
+  width: 70px;
+  background-color: var(--bg);
+  color: var(--text);
+  border-radius: 6px;
+  font-size: 18px;
+  padding: 5px;
+  text-align: center;
+}
+
+.filter-main .filter-data button {
+  padding: 5px;
+  font-size: 18px;
+  color: var(--text);
+  background-color: var(--bg);
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
