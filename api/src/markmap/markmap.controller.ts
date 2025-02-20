@@ -19,7 +19,6 @@ import { MarkmapService } from './markmap.service';
 import { MarkmapDto, UpdateMarkmapDto } from 'src/dto/markmaps.dto';
 import { TokenGuard } from 'src/token/token.guard';
 import { MarkmapInterceptor } from './markmap.interceptor';
-import { MarkmapEntity } from 'src/entities/markmap.entity';
 
 @Controller('markmap')
 export class MarkmapController {
@@ -40,21 +39,21 @@ export class MarkmapController {
 
   @Get('query')
   async searchMarkmapByName(
-    @Query('name') name: string,
-    @Query('order') order: 'stars' | 'date',
+    @Query('order_stars') orderStars: 'ASC' | 'DESC',
+    @Query('order_date') orderDate: 'ASC' | 'DESC',
+    @Query('name') name?: string,
     @Query('username') username?: string,
   ) {
-    let markmaps: MarkmapEntity[] | null | 0;
-
-    if (!username) {
-      markmaps = await this.markmapService.findMarkmap({ name, order });
-    } else {
-      markmaps = await this.markmapService.findMarkmap({
+    const markmaps = await this.markmapService.findMarkmap({
+      ...(name && {
         name,
-        order,
+      }),
+      orderStars,
+      orderDate,
+      ...(username && {
         username,
-      });
-    }
+      }),
+    });
 
     if (markmaps === 0) {
       throw new InternalServerErrorException('Something went wrong');

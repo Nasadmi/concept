@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { MarkmapEntity } from 'src/entities/markmap.entity';
 import { MarkmapDto, UpdateMarkmapDto } from 'src/dto/markmaps.dto';
 
@@ -22,35 +22,46 @@ export class MarkmapService {
 
   async findMarkmap({
     name,
-    order,
+    orderStars,
+    orderDate,
     username,
   }: {
-    name: string;
-    order: 'stars' | 'date';
+    name?: string;
+    orderStars: 'ASC' | 'DESC';
+    orderDate: 'ASC' | 'DESC';
     username?: string;
   }): Promise<MarkmapEntity[] | null | 0> {
     try {
       const founded = await this.markmapRepository.find({
         where: {
-          name,
+          ...(name && {
+            name: Like(`%${name}%`),
+          }),
           public: 1,
           ...(username && {
             user: {
-              username,
+              username: Like(`%${username}%`),
             },
           }),
         },
-        relations: { user: true },
+        relations: {
+          user: true,
+        },
         order: {
-          ...(order === 'date'
-            ? {
-                created_at: 'ASC',
-              }
-            : {
-                stars: 'ASC',
-              }),
+          stars: orderStars,
+          created_at: orderDate,
         },
         take: 25,
+        select: {
+          created_at: true,
+          name: true,
+          stars: true,
+          updated_at: true,
+          id: true,
+          user: {
+            username: true,
+          },
+        },
       });
       if (founded.length === 0) {
         return null;
