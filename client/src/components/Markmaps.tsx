@@ -1,18 +1,20 @@
 import { Link } from 'react-router'
-import { MkmType } from '../types/markmap.interface'
-import { HiStar, HiOutlineEye, HiOutlineEyeOff, HiSave, HiCloudUpload } from 'react-icons/hi'
-import '../styles/MyMarkmap.css'
+import { QMkmType } from '../types/markmap.interface'
+import { HiStar, HiOutlineEye, HiOutlineEyeOff, HiUser } from 'react-icons/hi'
+import { MdUpdate, MdCreateNewFolder } from 'react-icons/md'
+import '../styles/Markmap.css'
 import { MouseEvent } from 'react'
 
-export const MyMarkmaps = ({ markmaps }: { markmaps: Pick<MkmType, 'created_at' | 'updated_at' | 'id' | 'name' | 'public' | 'stars'>[] | null }) => {
+export const Markmaps = ({ markmaps, query }: { markmaps: QMkmType[] | null, query?: true }) => {
+
   const handleMouseEnter = (e: MouseEvent<HTMLAnchorElement>) => {
     const target = e.target as HTMLAnchorElement;
-    target.style.backgroundPosition = `${Math.floor(Math.random() * (50 - 5 + 1)) + 5}%`
+    target.style.backgroundPosition = `${Math.floor(Math.random() * (50 - 5 + 1)) + 5}px`
   }
 
   const handleMouseLeave = (e: MouseEvent<HTMLAnchorElement>) => {
     const target = e.target as HTMLAnchorElement;
-    target.style.backgroundPosition = '0'
+    target.style.backgroundPosition = '0px'
   }
 
   return (
@@ -30,6 +32,12 @@ export const MyMarkmaps = ({ markmaps }: { markmaps: Pick<MkmType, 'created_at' 
                   </li>
                   <li>
                     {
+                      query ?
+                      <>
+                        <HiUser/>
+                        <span className='text'>{mkm.user.username}</span>
+                      </>
+                      :
                       mkm.public === 0 ? 
                       <>
                         <HiOutlineEyeOff />
@@ -45,10 +53,10 @@ export const MyMarkmaps = ({ markmaps }: { markmaps: Pick<MkmType, 'created_at' 
                 </ul>
                 <ul className='date'>
                   <li>
-                    <HiSave /><span className='text'>{mkm.created_at.toString().split('T')[0]}</span>
+                    <MdCreateNewFolder /><span className='text'>{mkm.created_at.toString().split('T')[0]}</span>
                   </li>
                   <li>
-                    <HiCloudUpload /><span className='text'>{mkm.updated_at.toString().split('T')[0]}</span>
+                    <MdUpdate /><span className='text'>{mkm.updated_at.toString().split('T')[0]}</span>
                   </li>
                 </ul>
               </div>
