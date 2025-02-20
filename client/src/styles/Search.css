@@ -1,0 +1,66 @@
+.search-main .searcher {
+  background-color: var(--block-bg);
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  margin: 5px auto 0;
+  padding: 10px;
+  border-radius: 6px;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-main .searcher .data {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.search-main .searcher label {
+  font-weight: 600;
+  color: var(--border-bg);
+  font-size: 18px;
+}
+
+.search-main .searcher input {
+  font-size: 18px;
+  border-radius: 6px;
+  padding: 5px;
+  border: none;
+  width: 400px;
+  background-color: var(--bg);
+  color: var(--text);
+  outline: none;
+}
+
+.search-main .searcher .submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-main .searcher button {
+  font-size: 20px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  background-color: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 500ms ease-in-out;
+}
+
+.search-main .searcher button:hover {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+.filter-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
