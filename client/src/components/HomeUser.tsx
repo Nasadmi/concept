@@ -4,13 +4,15 @@ import { UserInterface } from '../types/user.interface';
 import { MkmType } from '../types/markmap.interface';
 import { TabContext } from '../context/Tab.context';
 import { NavBar } from './Navbar';
-import { MyMarkmaps } from './MyMarkmaps';
+import { Markmaps } from './Markmaps';
 import { Configuration } from './Configuration';
 
 export function HomeUser({ token }: { token: string }) {
   const [info, setInfo] = useState<Pick<UserInterface, 'created_at' | 'username' | 'id' > | null>(null);
   const [mkm, setMkm] = useState<MkmType[] | null>(null);
-  const loadedMkm = useRef<MkmType[] | null>(sessionStorage.getItem('loadedMkm') ? (JSON.parse(sessionStorage.getItem('loadedMkm') as string).statusCode ? [] : JSON.parse(sessionStorage.getItem('loadedMkm') as string)) : null);
+  const loadedMkm = useRef<MkmType[] | null>(sessionStorage.getItem('loadedMkm') ? 
+  (JSON.parse(sessionStorage.getItem('loadedMkm') as string).statusCode ? [] : JSON.parse(sessionStorage.getItem('loadedMkm') as string)) 
+  : null);
   const loadedInfo = useRef<Pick<UserInterface, 'created_at' | 'username' | 'id' > | null>(sessionStorage.getItem('loadedInfo') ? JSON.parse(sessionStorage.getItem('loadedInfo') as string) : null)
   const ctx = useContext(TabContext);
 
@@ -69,7 +71,7 @@ export function HomeUser({ token }: { token: string }) {
             <NavBar username={info.username} />
             {
               tab === 'mkm' ?
-              <MyMarkmaps markmaps={mkm}/> :
+              <Markmaps markmaps={mkm}/> :
               <Configuration />
             }
           </>
