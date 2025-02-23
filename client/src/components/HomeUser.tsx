@@ -87,7 +87,7 @@ export function HomeUser({ token }: { token: string }) {
                   }}/>
                 </div>
                 <Markmaps markmaps={mkm && (
-                mkm
+                [...mkm]
                 .filter(m => Number(m.stars) >= stars)
                 .sort((a,b) => (
                   date === 'asc-date' ?
