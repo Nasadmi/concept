@@ -3,7 +3,15 @@ import { DateType, FilterContext } from '../context/Filter.context';
 import { HiStar, HiCalendar, HiFilter } from 'react-icons/hi';
 import '../styles/Filter.css'
 
-export const Filter = () => {
+interface OStyles {
+  initialPos: number; 
+  finalPos: number; 
+  top: number; 
+  left: number;
+  origin: 'left' | 'right'
+}
+
+export const Filter = ({ styles }: { styles: OStyles }) => {
   const ctx = useContext(FilterContext);
 
   if (!ctx) throw new Error('Filter context no provided');
@@ -41,12 +49,16 @@ export const Filter = () => {
 
 
   return (
-    <div className='filter-main'>
+    <div id='filter-main'>
       <button className='filter-btn maven_pro' onClick={() => setShowFilters(!showFilter)}>
-        Filter
         <HiFilter />
       </button>
-      <section className={`filter-data ${showFilter && 'show'}`}>
+      <section className='filter-data' style={{
+        'transform': `${showFilter ? `translateX(${styles.finalPos}px)` : `translateX(${styles.initialPos}px)`}`,
+        'top': `${styles.top}px`,
+        'bottom': `${styles.left}px`,
+        'transformOrigin': 'right'
+      }}>
         <div>
           <label htmlFor="stars"><HiStar /></label>
           <input type="text" name="stars" id="stars" onChange={handleChangeStars} className='ubuntu' />

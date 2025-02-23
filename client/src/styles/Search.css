@@ -59,8 +59,31 @@
   color: var(--bg);
 }
 
-.filter-main {
+.utils {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 5px 0;
+}
+
+.utils button:not(#theme-selector),
+.utils a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 19px;
+  color: var(--text);
+  background-color: var(--block-bg);
+  padding: 4px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 500ms ease;
+}
+
+.utils button:not(#theme-selector):hover,
+.utils a:hover {
+  color: var(--bg);
+  background-color: var(--text);
 }

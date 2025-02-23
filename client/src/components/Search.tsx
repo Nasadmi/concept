@@ -6,9 +6,12 @@ import { useContext } from 'react'
 import { FilterContext } from '../context/Filter.context'
 import { Filter } from './Filter'
 import { Markmaps } from './Markmaps'
-import { HiSearch } from 'react-icons/hi'
+import { HiSearch, HiHome } from 'react-icons/hi'
 import { NotFoundMarkmap } from './NotFoundMarkmap'
 import '../styles/Search.css'
+import { TbReload } from 'react-icons/tb'
+import { ThemeSelector } from './Theme'
+import { Link } from 'react-router'
 
 export const Search = () => {
   const bearer = useRef(getCookie('bearer'));
@@ -90,8 +93,24 @@ export const Search = () => {
     });
   }
 
+  const handleReset = () => {
+    sessionStorage.removeItem('foundedMkm');
+    setFounded(null);
+  }
+
   return (
     <main className='search-main'>
+      <div className="utils">
+        <ThemeSelector styles={{
+          height: '30px'
+        }} />
+        <button className='btn-util' onClick={handleReset}>
+          <TbReload />
+        </button>
+        <Link to={'/'} className='btn-util'>
+          <HiHome />
+        </Link>
+      </div>
       <form onSubmit={handleSubmit} className='searcher'>
           <div className='data'>
             <label htmlFor="name" className='maven_pro'>Name</label>
@@ -100,12 +119,18 @@ export const Search = () => {
             <input type="text" name="username" id="username" autoComplete='off' spellCheck='false' className='ubuntu'/>
           </div>
           <div className='submit'>
-          <button type="submit">
-            <HiSearch />
-          </button>
+            <button type="submit" className='btn-util'>
+              <HiSearch />
+            </button>
+            <Filter styles={{
+              initialPos: 900,
+              finalPos: 70,
+              top: -55,
+              left: 0,
+              origin: 'right'
+            }}/>
           </div>
         </form>
-      <Filter />
       {
         founded === undefined ?
           <NotFoundMarkmap />

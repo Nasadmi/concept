@@ -1,8 +1,8 @@
-.filter-main {
+#filter-main {
   position: relative;
 }
 
-.filter-main .filter-btn {
+#filter-main .filter-btn {
   display: flex;
   align-items: center;
   font-size: 18px;
@@ -17,35 +17,32 @@
   margin: 10px 0;
 }
 
-.filter-main .filter-data {
+#filter-main .filter-data {
   position: absolute;
-  top: -120px;
-  left: 0;
   background-color: var(--block-bg);
   padding: 10px;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-radius: 12px;
   color: var(--text);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   font-size: 20px;
-  transform: translateX(-200px);
-  transition: transform 1s ease;
+  transition: transform 700ms ease;
+  height: fit-content;
 }
 
-.filter-main .filter-data.show {
+#filter-main .filter-data.show {
   transform: translateX(0);
 }
 
-.filter-main .filter-data div {
+#filter-main .filter-data div {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.filter-main .filter-data input {
+#filter-main .filter-data input {
   width: 70px;
   background-color: var(--bg);
   color: var(--text);
@@ -58,7 +55,7 @@
   text-align: center;
 }
 
-.filter-main .filter-data select {
+#filter-main .filter-data select {
   appearance: none;
   width: 70px;
   background-color: var(--bg);
@@ -70,7 +67,7 @@
   outline: none;
 }
 
-.filter-main .filter-data button {
+#filter-main .filter-data button {
   padding: 5px;
   font-size: 18px;
   color: var(--text);

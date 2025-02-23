@@ -1,8 +1,8 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, type CSSProperties } from 'react';
 import { HiSun, HiMoon } from 'react-icons/hi';
 import '../styles/Theme.css';
 
-export const ThemeSelector = () => {
+export const ThemeSelector = ({ styles }: { styles?: CSSProperties }) => {
   const [theme, setTheme] = useState<string>('');
   const root = useRef(document.documentElement.classList);
 
@@ -28,7 +28,7 @@ export const ThemeSelector = () => {
   }
 
   return (
-    <button onClick={handleClick} id='theme-selector'>
+    <button onClick={handleClick} id='theme-selector' style={styles}>
       {theme === 'dark' ? <HiSun /> : <HiMoon />}
     </button>
   );

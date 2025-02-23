@@ -16,3 +16,7 @@ export const createCookie = ({ name, value, days }: { name: string; value: strin
   document.cookie = `${name}=${value}${expires}; path=/`
   console.log(document.cookie)
 }
+
+export const removeCookie = (name: string) => {
+  document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
