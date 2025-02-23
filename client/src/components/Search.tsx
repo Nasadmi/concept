@@ -123,10 +123,10 @@ export const Search = () => {
               <HiSearch />
             </button>
             <Filter styles={{
-              initialPos: 900,
-              finalPos: 70,
-              top: -55,
-              left: 0,
+              initialPos: -900,
+              finalPos: 5,
+              top: 90,
+              left: -380,
               origin: 'right'
             }}/>
           </div>
@@ -135,12 +135,14 @@ export const Search = () => {
         founded === undefined ?
           <NotFoundMarkmap />
           :
-          <Markmaps query={true} markmaps={founded && (all ? founded : [...founded].filter(mkm => (Number(mkm.stars) >= stars)).sort((a,b) => (
+          <div id="container-search">
+            <Markmaps query={true} markmaps={founded && (all ? founded : [...founded].filter(mkm => (Number(mkm.stars) >= stars)).sort((a,b) => (
             date === 'asc-date' ?
               new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
              :
              new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-          )))} />
+            )))} />
+          </div>
       }
     </main>
   )

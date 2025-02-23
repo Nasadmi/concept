@@ -54,14 +54,14 @@ export const Filter = ({ styles }: { styles: OStyles }) => {
         <HiFilter />
       </button>
       <section className='filter-data' style={{
-        'transform': `${showFilter ? `translateX(${styles.finalPos}px)` : `translateX(${styles.initialPos}px)`}`,
+        'transform': `${showFilter ? `translateY(${styles.finalPos}px)` : `translateY(${styles.initialPos}px)`}`,
         'top': `${styles.top}px`,
-        'bottom': `${styles.left}px`,
+        'left': `${styles.left}px`,
         'transformOrigin': 'right'
       }}>
         <div>
           <label htmlFor="stars"><HiStar /></label>
-          <input type="text" name="stars" id="stars" onChange={handleChangeStars} className='ubuntu' />
+          <input type="text" name="stars" id="stars" onChange={handleChangeStars} className='ubuntu' autoComplete='off' />
         </div>
         <div>
         <label htmlFor="date" ><HiCalendar /></label>

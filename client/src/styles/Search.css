@@ -35,8 +35,8 @@
 
 .search-main .searcher .submit {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  gap: 10px;
 }
 
 .search-main .searcher button {
@@ -86,4 +86,8 @@
 .utils a:hover {
   color: var(--bg);
   background-color: var(--text);
+}
+
+#container-search {
+  margin-top: 70px;
 }

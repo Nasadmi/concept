@@ -6,6 +6,9 @@ import { TabContext } from '../context/Tab.context';
 import { NavBar } from './Navbar';
 import { Markmaps } from './Markmaps';
 import { Configuration } from './Configuration';
+import { FilterContext } from '../context/Filter.context';
+import { Filter } from './Filter';
+import '../styles/HomeUser.css';
 
 export function HomeUser({ token }: { token: string }) {
   const [info, setInfo] = useState<Pick<UserInterface, 'created_at' | 'username' | 'id' > | null>(null);
@@ -14,13 +17,15 @@ export function HomeUser({ token }: { token: string }) {
   (JSON.parse(sessionStorage.getItem('loadedMkm') as string).statusCode ? [] : JSON.parse(sessionStorage.getItem('loadedMkm') as string)) 
   : null);
   const loadedInfo = useRef<Pick<UserInterface, 'created_at' | 'username' | 'id' > | null>(sessionStorage.getItem('loadedInfo') ? JSON.parse(sessionStorage.getItem('loadedInfo') as string) : null)
-  const ctx = useContext(TabContext);
+  const tabctx = useContext(TabContext);
+  const filterctx = useContext(FilterContext);
 
-  if (!ctx) {
+  if (!tabctx || !filterctx) {
     throw new Error('Context not provided')
   }
 
-  const { tab } = ctx;
+  const { tab } = tabctx;
+  const { date, stars } = filterctx
 
   useEffect(() => {
     if (loadedInfo.current) {
@@ -71,7 +76,27 @@ export function HomeUser({ token }: { token: string }) {
             <NavBar username={info.username} />
             {
               tab === 'mkm' ?
-              <Markmaps markmaps={mkm}/> :
+              <>
+                <div id="container-home-user">
+                  <Filter styles={{
+                    initialPos: -900,
+                    finalPos: 0,
+                    top: -10,
+                    left: 50,
+                    origin: 'left'
+                  }}/>
+                </div>
+                <Markmaps markmaps={mkm && (
+                mkm
+                .filter(m => Number(m.stars) >= stars)
+                .sort((a,b) => (
+                  date === 'asc-date' ?
+                    new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                  :
+                    new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+                ))
+              )}/>
+              </> :
               <Configuration />
             }
           </>

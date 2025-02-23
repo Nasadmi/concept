@@ -3,6 +3,7 @@ import { Home } from './components/Home';
 import { HomeUser } from './components/HomeUser';
 import { TabProvider } from './providers/Tab.provider';
 import { getCookie } from './service/cookie.service'
+import { FilterProvider } from './providers/Filter.provider';
 
 export function App() {
   const bearer = getCookie('bearer');
@@ -11,7 +12,9 @@ export function App() {
       <Home />
     :
       <TabProvider>
-        <HomeUser token={ bearer } />
+        <FilterProvider>
+          <HomeUser token={ bearer } />
+        </FilterProvider>
       </TabProvider>
   )
 }

@@ -3,9 +3,11 @@
   "typescript.preferences.quoteStyle": "single",
   "javascript.preferences.quoteStyle": "single",
   "cSpell.words": [
+    "filterctx",
     "Markmap",
     "markmaps",
     "Swal",
-    "sweetalert"
+    "sweetalert",
+    "tabctx"
   ]
 }

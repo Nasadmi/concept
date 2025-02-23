@@ -49,6 +49,7 @@ export function NavBar({ username }: { username: string }) {
         <button className='btn-logout maven_pro' onClick={handleLogout}>
           <HiLogout />
         </button>
+        
       </ul>
     </nav>
   )
