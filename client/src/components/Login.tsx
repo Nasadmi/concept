@@ -2,13 +2,11 @@ import { FC } from "react";
 import '../styles/Login.css'
 import { Link } from 'react-router';
 import { fetchingUser } from '../service/fetch.service';
-import Swal from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content';
+import { toast } from '../service/alert.service';
 import { createCookie } from '../service/cookie.service';
 
 export const Login: FC = () => {
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
-    const alert = withReactContent(Swal);
     e.preventDefault()
     const data = Object.fromEntries(new FormData(e.target))
     fetchingUser({
@@ -19,16 +17,15 @@ export const Login: FC = () => {
     .then((response) => response.json())
     .then((bearer) => {
       if (bearer.statusCode === 404 || bearer.statusCode === 401) {
-        alert.fire({
+        toast.fire({
           text: 'Password or user is incorrect',
           icon: 'warning',
-          position: 'bottom-left',
-          timer: 2000
+          position: 'bottom-left'
         })
         return;
       }
 
-      alert.fire({
+      toast.fire({
         text: 'Welcome',
         icon: 'success',
         position: 'bottom-left',
@@ -39,11 +36,10 @@ export const Login: FC = () => {
       })
     })
     .catch((e) => {
-      alert.fire({
+      toast.fire({
         text: 'Something went wrong',
         icon: 'error',
-        position: 'bottom-left',
-        timer: 2000
+        position: 'bottom-left'
       })
       console.error(e);
     })

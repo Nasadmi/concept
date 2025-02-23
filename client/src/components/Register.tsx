@@ -4,14 +4,11 @@ import { getCookie, createCookie } from '../service/cookie.service';
 import '../styles/Register.css';
 import { Link } from 'react-router';
 import { fetchingUser } from '../service/fetch.service';
-import withReactContent from 'sweetalert2-react-content';
-import Swal from 'sweetalert2'
+import { toast } from '../service/alert.service';
 
 export const Register: FC = () => {
     const visit = useRef(getCookie('first_visit'))
-
     const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
-      const alert = withReactContent(Swal);
       e.preventDefault()
       const data = Object.fromEntries(new FormData(e.target))
       fetchingUser({
@@ -21,9 +18,8 @@ export const Register: FC = () => {
       })
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
         if (res.statusCode === 409) {
-          alert.fire({
+          toast.fire({
             text: 'This user already exists',
             icon: 'warning',
             position: 'bottom-left',
@@ -33,7 +29,7 @@ export const Register: FC = () => {
         }
         
         if (res.statusCode === 400) {
-          alert.fire({
+          toast.fire({
             text: 'Email not valid or not strong password',
             icon: 'warning',
             position: 'bottom-left',
@@ -42,7 +38,7 @@ export const Register: FC = () => {
           return;
         }
 
-        alert.fire({
+        toast.fire({
           text: 'User created',
           icon: 'success',
           position: 'bottom-left',
@@ -52,7 +48,7 @@ export const Register: FC = () => {
         })
       })
       .catch((e) => {
-        alert.fire({
+        toast.fire({
           text: 'Something went wrong',
           icon: 'error',
           position: 'bottom-left',
