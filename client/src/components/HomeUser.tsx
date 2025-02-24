@@ -79,7 +79,7 @@ export function HomeUser({ token }: { token: string }) {
               <>
                 <div id="container-home-user">
                   <Filter styles={{
-                    initialPos: -900,
+                    initialPos: -200,
                     finalPos: 0,
                     top: -10,
                     left: 50,

@@ -124,7 +124,7 @@ export const Search = () => {
             </button>
             <Filter styles={{
               initialPos: -900,
-              finalPos: 5,
+              finalPos: 10,
               top: 90,
               left: -380,
               origin: 'right'
@@ -136,7 +136,7 @@ export const Search = () => {
           <NotFoundMarkmap />
           :
           <div id="container-search">
-            <Markmaps query={true} markmaps={founded && (all ? founded : [...founded].filter(mkm => (Number(mkm.stars) >= stars)).sort((a,b) => (
+            <Markmaps query markmaps={founded && (all ? founded : [...founded].filter(mkm => (Number(mkm.stars) >= stars)).sort((a,b) => (
             date === 'asc-date' ?
               new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
              :

@@ -16,7 +16,7 @@ export const Filter = ({ styles }: { styles: OStyles }) => {
 
   if (!ctx) throw new Error('Filter context no provided');
   
-  const [showFilter, setShowFilters] = useState(false)
+  const [showFilter, setShowFilters] = useState(true)
 
   const { setDate, setStars, setAll } = ctx;
 
