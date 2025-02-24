@@ -1,0 +1,93 @@
+#new-markmap {
+  background-color: transparent;
+  border-radius: 5px;
+  border: 4px solid var(--border-color);
+  border-style: dashed;
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  cursor: pointer;
+  position: relative;
+  gap: 5px;
+  z-index: 1;
+  outline: none;
+}
+
+#new-markmap::before {
+  position: absolute;
+  content: '';
+  background-color: var(--block-bg);
+  width: 100%;
+  height: 100%;
+  clip-path: circle(0% at 50% 50%);
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  transition: all 700ms ease;
+}
+
+#new-markmap:hover::before {
+  clip-path: circle(100% at 50% 50%);
+}
+
+#new-mkm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#new-mkm-form > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#new-mkm-form label {
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+#new-mkm-form input#new-mkm-name {
+  background-color: var(--bg);
+  padding: 5px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  color: var(--text);
+  text-align: center;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  background-color: var(--bg);
+  margin: 0;
+  color: var(--text);
+  width: 1.15em;
+  height: 1.15em;
+  border-radius: 0.15em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: .5em;
+  height: .5em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--text);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
