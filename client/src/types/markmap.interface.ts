@@ -14,3 +14,5 @@ export interface MkmType {
 export type PMkmType = Partial<MkmType>
 
 export type QMkmType = Pick<MkmType, 'created_at' | 'updated_at' | 'id' | 'name' | 'public' | 'stars' | 'user'>
+
+export type CMkmFunc = (data: { name: string; checkPublic: boolean }) => void

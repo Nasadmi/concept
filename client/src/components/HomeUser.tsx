@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { fetchingUser, fetchingMarkmap } from '../service/fetch.service'
 import { UserInterface } from '../types/user.interface';
-import { MkmType } from '../types/markmap.interface';
+import { CMkmFunc, MkmType } from '../types/markmap.interface';
 import { TabContext } from '../context/Tab.context';
 import { NavBar } from './Navbar';
 import { Markmaps } from './Markmaps';
@@ -26,6 +26,31 @@ export function HomeUser({ token }: { token: string }) {
 
   const { tab } = tabctx;
   const { date, stars } = filterctx
+
+  const handleCMkm: CMkmFunc = (data) => {
+    fetchingMarkmap({
+      url: '',
+      method: 'POST',
+      bearer: token,
+      data: { name: data.name, public: data.checkPublic ? 1 : 0, code: '_' },
+    }).then((response) => response.json())
+    .then((res) => {
+      if (res.statusCode) {
+        console.log(res);
+        return;
+      }
+
+      if (!mkm) return;
+
+      const newMkm = [...mkm, res];
+
+      const sesMkm = JSON.stringify(newMkm);
+
+      setMkm(newMkm);
+
+      sessionStorage.setItem('loadedMkm', sesMkm)
+    })
+  }
 
   useEffect(() => {
     if (loadedInfo.current) {
@@ -95,7 +120,7 @@ export function HomeUser({ token }: { token: string }) {
                   :
                     new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
                 ))
-              )}/>
+              )} cmkm={handleCMkm}/>
               </> :
               <Configuration />
             }

@@ -5,8 +5,13 @@ import { HiStar, HiOutlineEye, HiOutlineEyeOff, HiUser } from 'react-icons/hi'
 import { MdUpdate, MdCreateNewFolder } from 'react-icons/md'
 import '../styles/Markmap.css'
 import { MouseEvent } from 'react'
+import { CMkmFunc } from '../types/markmap.interface'
 
-export const Markmaps = ({ markmaps, query }: { markmaps: QMkmType[] | null, query?: true }) => {
+export const Markmaps = ({ markmaps, query, cmkm }: { 
+  markmaps: QMkmType[] | null, 
+  query?: true,
+  cmkm?: CMkmFunc
+ }) => {
 
   const handleMouseEnter = (e: MouseEvent<HTMLAnchorElement>) => {
     const target = e.target as HTMLAnchorElement;
@@ -25,7 +30,7 @@ export const Markmaps = ({ markmaps, query }: { markmaps: QMkmType[] | null, que
           <></> :
           <>
             {
-              !query && <NewMarkmap />
+              !query && <NewMarkmap exec={cmkm}/>
             }
             {
               markmaps.map((mkm) => (
@@ -44,7 +49,7 @@ export const Markmaps = ({ markmaps, query }: { markmaps: QMkmType[] | null, que
                             <span className='text'>{mkm.user.username}</span>
                           </>
                           :
-                          mkm.public === 0 ? 
+                          Number(mkm.public) === 0 ? 
                           <>
                             <HiOutlineEyeOff />
                             <span className='text'>Private</span>

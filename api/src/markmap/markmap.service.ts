@@ -13,7 +13,10 @@ export class MarkmapService {
 
   async createMarkmap(markmap: MarkmapDto) {
     try {
-      return await this.markmapRepository.save(markmap);
+      const saved = await this.markmapRepository.save(markmap);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { user, code, ...rest } = saved;
+      return rest;
     } catch (err) {
       console.error(err);
       return 0;
