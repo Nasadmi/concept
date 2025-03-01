@@ -11,7 +11,6 @@ import {
   NotFoundException,
   Put,
   Delete,
-  HttpCode,
   HttpStatus,
   Query,
 } from '@nestjs/common';
@@ -102,13 +101,16 @@ export class MarkmapController {
 
   @Delete(':id')
   @UseGuards(TokenGuard)
-  @HttpCode(HttpStatus.OK)
   async removeMarkmap(
     @Headers('bearer') bearer: { id: string },
     @Param('id') id: string,
   ) {
     try {
-      await this.markmapService.deleteMarkmap(bearer.id, id);
+      await this.markmapService.deleteMarkmap(id, bearer.id);
+      return {
+        statusCode: HttpStatus.OK,
+        message: 'Markmap deleted',
+      };
     } catch (err) {
       console.error(err);
       throw new InternalServerErrorException('Something went wrong');

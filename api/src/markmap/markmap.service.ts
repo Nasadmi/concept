@@ -112,9 +112,12 @@ export class MarkmapService {
   }
 
   async deleteMarkmap(markmapId: string, userId: string) {
-    return await this.markmapRepository.delete({
+    console.log(markmapId, userId);
+    const deleted = await this.markmapRepository.delete({
       id: markmapId,
       user: { id: userId },
     });
+
+    console.log(deleted);
   }
 }
