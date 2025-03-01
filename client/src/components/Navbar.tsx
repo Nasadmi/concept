@@ -21,7 +21,7 @@ export function NavBar({ username }: { username: string }) {
       title: 'Log Out',
       icon: 'warning',
       text: 'Are you sure to log out?',
-      background: 'var(--block-bg)',
+      background: 'var(--bg)',
       color: 'var(--text)',
       showConfirmButton: true,
       confirmButtonText: 'Sure',

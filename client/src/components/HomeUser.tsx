@@ -52,6 +52,28 @@ export function HomeUser({ token }: { token: string }) {
     })
   }
 
+  const handleDMkm = (id: string) => {
+    fetchingMarkmap({
+      url: `${id}`,
+      method: 'DELETE',
+      bearer: token,
+    }).then((response) => response.clone().json())
+    .then((res) => {
+      if (res.statusCode === 500) {
+        return;
+      }
+
+      if(!mkm) return;
+
+      const newMkm = [...mkm].filter((i) => i.id !== id);
+
+      const sesMkm = JSON.stringify(newMkm);
+
+      setMkm(newMkm);
+      sessionStorage.setItem('loadedMkm', sesMkm)
+    })
+  }
+
   useEffect(() => {
     if (loadedInfo.current) {
       setInfo(loadedInfo.current);
@@ -120,7 +142,7 @@ export function HomeUser({ token }: { token: string }) {
                   :
                     new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
                 ))
-              )} cmkm={handleCMkm}/>
+              )} cmkm={handleCMkm} dmkm={handleDMkm}/>
               </> :
               <Configuration />
             }
