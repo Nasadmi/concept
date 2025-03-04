@@ -6,6 +6,8 @@ import { StrictMode } from 'react'
 import { Home } from './components/Home';
 import { Search } from './components/Search';
 import { FilterProvider } from './providers/Filter.provider';
+import { Editor } from './components/Editor';
+import { EditorHelp } from './components/EditorHelp';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -19,6 +21,8 @@ createRoot(document.getElementById('root')!).render(
             <Search />
           </FilterProvider>
         }/>
+        <Route path='/edit/:id' element={<Editor />}/>
+        <Route path='/help' element={<EditorHelp />}/>
       </Routes>
     </BrowserRouter>
   </StrictMode>

@@ -142,7 +142,7 @@ export function HomeUser({ token }: { token: string }) {
                   :
                     new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
                 ))
-              )} cmkm={handleCMkm} dmkm={handleDMkm}/>
+              )} cmkm={handleCMkm} dmkm={handleDMkm} bearer={token} />
               </> :
               <Configuration />
             }

@@ -3,7 +3,7 @@ import { UserInterface, PUserInterface } from '../types/user.interface';
 import { MkmType, PMkmType } from '../types/markmap.interface';
 
 type DataFetching = UserInterface | PUserInterface
-type Methods = 'POST' | 'GET' | 'DELETE'
+type Methods = 'POST' | 'GET' | 'DELETE' | 'PUT'
 type fetchingUserParams = { url: string; data?: DataFetching, bearer?: string; method?: Methods }
 type fetchingMarkmapParams = { url: string; data?: MkmType | PMkmType; bearer?: string; method?: Methods }
 

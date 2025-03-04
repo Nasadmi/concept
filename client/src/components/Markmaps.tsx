@@ -1,4 +1,4 @@
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { NewMarkmap } from './NewMarkmap'
 import { QMkmType } from '../types/markmap.interface'
 import { HiStar, HiOutlineEye, HiOutlineEyeOff, HiUser, HiPencil, HiTrash, HiBookOpen } from 'react-icons/hi'
@@ -7,13 +7,16 @@ import '../styles/Markmap.css'
 import { MouseEvent } from 'react'
 import { CMkmFunc } from '../types/markmap.interface'
 import { alert } from '../service/alert.service'
+import { fetchingMarkmap } from '../service/fetch.service'
 
-export const Markmaps = ({ markmaps, query, cmkm, dmkm }: { 
+export const Markmaps = ({ markmaps, query, cmkm, dmkm, bearer }: { 
   markmaps: QMkmType[] | null, 
   query?: true,
   cmkm?: CMkmFunc,
   dmkm?: (id: string) => void,
+  bearer?: string
  }) => {
+  const navigate = useNavigate()
 
   const handleMouseEnter = (e: MouseEvent<HTMLAnchorElement>) => {
     const target = e.target as HTMLAnchorElement;
@@ -25,7 +28,7 @@ export const Markmaps = ({ markmaps, query, cmkm, dmkm }: {
     target.style.backgroundPosition = '0px'
   }
 
-  const DeleteMkm = (id: string, name: string) => {
+  const handleDeleteMkm = (id: string, name: string) => {
     alert.fire({
       title: `Are you sure to delete "${name}"`,
       icon: 'warning',
@@ -43,6 +46,23 @@ export const Markmaps = ({ markmaps, query, cmkm, dmkm }: {
       }
   
       dmkm(id);
+    })
+  }
+
+  const handleEdit = (id: string, bearer?: string) => {
+    if (!bearer) return;
+    fetchingMarkmap({
+      url: `code/${id}`,
+      method: 'GET',
+      bearer,
+    }).then((response) => response.clone().json())
+    .then((res) => {
+      if (res.statusCode) {
+        return;
+      }
+
+      sessionStorage.setItem('editMkm', JSON.stringify(res))
+      navigate(`/edit/${id}`)
     })
   }
 
@@ -105,12 +125,15 @@ export const Markmaps = ({ markmaps, query, cmkm, dmkm }: {
                           </Link>
                         </li>
                         <li>
-                          <Link to={`/edit/${mkm.id}`} className='utils-edit'>
+                          <Link to={`/edit/${mkm.id}`} onClick={(e) => {
+                            e.preventDefault()
+                            handleEdit(mkm.id, bearer)
+                          }} className='utils-edit'>
                             <HiPencil />
                           </Link>
                         </li>
                         <li>
-                          <button className='utils-delete' onClick={() => { DeleteMkm(mkm.id, mkm.name) }}>
+                          <button className='utils-delete' onClick={() => { handleDeleteMkm(mkm.id, mkm.name) }}>
                             <HiTrash />
                           </button>
                         </li>

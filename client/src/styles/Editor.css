@@ -1,0 +1,96 @@
+.editor-main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cm-content {
+  border-right: 3px solid var(--border-bg);
+}
+
+.cm-content * {
+  font-family: 'Ubuntu Mono', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+.mkm-render {
+  height: 100vh;
+}
+
+.mkm-render * {
+  color: var(--text);
+  font-family: 'Ubuntu Mono';
+}
+
+.mkm-toolbar .mm-toolbar {
+  position: absolute;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 2px solid var(--border-bg); 
+  top: 10px;
+  right: 10px;
+}
+
+.mkm-toolbar .mm-toolbar span {
+  font-family: 'Maven Pro';
+  font-weight: 500;
+}
+
+.mkm-toolbar .mm-toolbar * {
+  transition: all 150ms ease;
+}
+
+.util-editor {
+  position: absolute;
+  display: flex;
+  right: 10px;
+  top: 50px;
+  align-items: center;
+  background-color: var(--block-bg);
+  padding: 8px;
+  gap: 10px;
+  border-radius: 12px;
+}
+
+.util-editor * {
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.util-btn {
+  border-radius: 50%;
+  padding: 7px;
+  border: none;
+  cursor: pointer;
+  transition: all 250ms ease;
+}
+
+.util-btn.save {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.util-btn.saved {
+  background-color: var(--bg);
+  color: var(--text);
+  opacity: .5;
+  cursor: auto;
+}
+
+.util-btn.help {
+  background-color: var(--border-bg);
+  color: var(--bg);
+}
+
+.util-btn.help:hover {
+  background-color: var(--bg);
+  color: var(--border-bg);
+}
+
+.util-editor a:not(.help) {
+  color: var(--bg);
+  background-color: var(--text);
+  padding: 5px;
+  border-radius: 5px;
+}

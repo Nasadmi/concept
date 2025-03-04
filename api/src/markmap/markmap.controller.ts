@@ -80,6 +80,33 @@ export class MarkmapController {
     return markmaps;
   }
 
+  @Get('code/:id')
+  @UseGuards(TokenGuard)
+  async getCodeOfMarkmap(
+    @Headers('bearer') bearer: { id: string },
+    @Param('id') id: string,
+  ) {
+    try {
+      const mkm = await this.markmapService.editMarkmap(bearer.id, id);
+
+      if (!mkm) {
+        throw new NotFoundException('Markmap not found');
+      }
+
+      const { name, code, public: pub, id: mkmId } = mkm;
+
+      return {
+        name,
+        code,
+        pub,
+        id: mkmId,
+      };
+    } catch (err) {
+      console.error(err);
+      throw new InternalServerErrorException('Something went wrong');
+    }
+  }
+
   @Put(':id')
   @UseGuards(TokenGuard)
   async updateMarkmaps(
@@ -96,7 +123,11 @@ export class MarkmapController {
     if (newMarkmap === 0) {
       throw new InternalServerErrorException('Something went wrong');
     }
-    return newMarkmap;
+
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Markmap updated',
+    };
   }
 
   @Delete(':id')

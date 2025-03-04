@@ -95,6 +95,21 @@ export class MarkmapService {
     }
   }
 
+  async editMarkmap(user: string, id: string) {
+    try {
+      const mkm = await this.markmapRepository.findOneBy({
+        user: {
+          id: user,
+        },
+        id,
+      });
+      return mkm;
+    } catch (err) {
+      console.error(err);
+      return 0;
+    }
+  }
+
   async updateMarkmap(
     user: string,
     markmapId: string,
