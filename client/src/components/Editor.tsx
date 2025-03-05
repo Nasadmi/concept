@@ -203,6 +203,8 @@ export const Editor = () => {
                       icon: 'warning',
                       showConfirmButton: true,
                       showCancelButton: true,
+                      background: 'var(--bg)',
+                      color: 'var(--text)'
                     }).then((result) => {
                       if (result.isConfirmed) {
                         handleSaved()
