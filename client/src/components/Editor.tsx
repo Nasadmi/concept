@@ -217,6 +217,8 @@ export const Editor = () => {
                       window.location.href = '/'
                     })
                   } else {
+                    sessionStorage.removeItem('loadedMkm')
+                    sessionStorage.removeItem('foundedMkm')
                     window.location.href = '/'
                   }
                 }}>
