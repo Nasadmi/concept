@@ -39,6 +39,10 @@
   transition: all 150ms ease;
 }
 
+.markmap-foreign mark {
+  background: var(--block-bg) !important;
+}
+
 .util-editor {
   position: absolute;
   display: flex;
