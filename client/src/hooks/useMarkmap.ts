@@ -4,6 +4,8 @@ import "markmap-toolbar/dist/style.css";
 import { Toolbar } from "markmap-toolbar";
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import debounce from "just-debounce-it";
+import highlight from 'highlight.js'
+import 'highlight.js/styles/tokyo-night-dark.css';
 
 const renderToolBar = ({
   mm,
@@ -41,7 +43,13 @@ export function useMarkmaps({ setter }: { setter: Dispatch<SetStateAction<string
     if (!mm) return;
     const { root } = transformer.transform(value);
     mm.setData(root);
-    mm.fit();
+    mm.options.autoFit = true
+    const timeout = setTimeout(() => {
+      document.querySelectorAll('.mkm-render pre code').forEach(block => {
+        highlight.highlightElement(block as HTMLElement);
+      })
+    }, 500)
+    return () => clearTimeout(timeout)
   }, [refMm.current, value]);
 
   const handleChange = (val: string) => {
@@ -70,7 +78,7 @@ export function useMarkmaps({ setter }: { setter: Dispatch<SetStateAction<string
   };
 }
 
-export function useMultipleMarkmap() {
+export function usePlaneMarkmap() {
   const [value, setValue] = useState('');
   
   const refSvg = useRef<SVGSVGElement | null>(null);
@@ -90,7 +98,13 @@ export function useMultipleMarkmap() {
     if (!mm) return;
     const { root } = transformer.transform(value);
     mm.setData(root);
-    mm.fit();
+    mm.options.autoFit = true;
+    const timeout = setTimeout(() => {
+      document.querySelectorAll('.mkm-render pre code').forEach(block => {
+        highlight.highlightElement(block as HTMLElement);
+      })
+    }, 500)
+    return () => clearTimeout(timeout)
   }, [value]);
 
   return {

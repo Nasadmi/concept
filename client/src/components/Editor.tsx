@@ -168,7 +168,7 @@ export const Editor = () => {
             <CodeMirror 
               value={`${config}${mkm.code === '_' ? '' : decodeBase64(mkm.code || '')}`}
               height='100vh'
-              width='750px'
+              width='650px'
               theme={light ? tokyoNightDay : tokyoNightStorm}
               extensions={[markdown({ base: markdownLanguage, codeLanguages: languages })]}
               className='maven_pro'

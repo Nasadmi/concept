@@ -98,3 +98,20 @@
   padding: 5px;
   border-radius: 5px;
 }
+
+.mkm-render code {
+  background-color: #353738 !important;
+  padding: 5px;
+}
+
+.hljs-string {
+  color: #9ece6a !important;
+}
+
+.katex-display {
+  margin: 0 !important;
+}
+
+.mord {
+  font-family: 'KaTeX_Main', 'Times New Roman', Times, serif;
+}

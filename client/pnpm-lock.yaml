@@ -29,6 +29,9 @@ importers:
       d3:
         specifier: ^7.9.0
         version: 7.9.0
+      highlight.js:
+        specifier: ^11.11.1
+        version: 11.11.1
       just-debounce-it:
         specifier: ^3.2.0
         version: 3.2.0
