@@ -97,13 +97,13 @@ export function usePlaneMarkmap() {
     const mm = refMm.current;
     if (!mm) return;
     const { root } = transformer.transform(value);
-    mm.setData(root);
     mm.options.autoFit = true;
     const timeout = setTimeout(() => {
+      mm.setData(root);
       document.querySelectorAll('.mkm-render pre code').forEach(block => {
         highlight.highlightElement(block as HTMLElement);
       })
-    }, 500)
+    }, 100)
     return () => clearTimeout(timeout)
   }, [value]);
 
@@ -113,6 +113,6 @@ export function usePlaneMarkmap() {
     refMm,
     markmap,
     value,
-    setValue
+    setValue,
   };
 }

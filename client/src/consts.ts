@@ -23,7 +23,7 @@ export const MKM_EXAMPLES: { ex: string, code: string }[] = [
   },
   {
     ex: 'katex',
-    code: '# Mathematical formulas\n- $ ax²+bx+c=0 $\n- [More about Katex format](https://katex.org/docs/supported.html)'
+    code: '# Mathematical formulas\n- $$ ax²+bx+c=0 $$\n- [More about Katex format](https://katex.org/docs/supported.html)'
   },
   {
     ex: 'table',
