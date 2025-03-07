@@ -111,9 +111,9 @@ export function usePlaneMarkmap() {
       import("katex").then((katex) => {
         window.katex = katex;
         mm.setData(root);
-      })
-      document.querySelectorAll('.mkm-render pre code').forEach(block => {
-        highlight.highlightElement(block as HTMLElement);
+        document.querySelectorAll('.mkm-render pre code').forEach(block => {
+          highlight.highlightElement(block as HTMLElement);
+        })
       })
     }, 100)
     return () => clearTimeout(timeout)
