@@ -19,6 +19,7 @@
     "d3": "^7.9.0",
     "highlight.js": "^11.11.1",
     "just-debounce-it": "^3.2.0",
+    "katex": "^0.16.21",
     "markmap-common": "^0.18.9",
     "markmap-lib": "^0.18.11",
     "markmap-toolbar": "^0.18.10",

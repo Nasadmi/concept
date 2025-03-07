@@ -7,6 +7,12 @@ import debounce from "just-debounce-it";
 import highlight from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css';
 
+declare global {
+  interface Window {
+    katex?: typeof import("katex");
+  }
+}
+
 const renderToolBar = ({
   mm,
   wrapper,
@@ -42,8 +48,11 @@ export function useMarkmaps({ setter }: { setter: Dispatch<SetStateAction<string
     const mm = refMm.current;
     if (!mm) return;
     const { root } = transformer.transform(value);
-    mm.setData(root);
     mm.options.autoFit = true
+    import("katex").then((katex) => {
+      window.katex = katex;
+      mm.setData(root);
+    })
     const timeout = setTimeout(() => {
       document.querySelectorAll('.mkm-render pre code').forEach(block => {
         highlight.highlightElement(block as HTMLElement);
@@ -80,7 +89,7 @@ export function useMarkmaps({ setter }: { setter: Dispatch<SetStateAction<string
 
 export function usePlaneMarkmap() {
   const [value, setValue] = useState('');
-  
+
   const refSvg = useRef<SVGSVGElement | null>(null);
   const refMm = useRef<Markmap | null>(null);
   const refToolbar = useRef<HTMLDivElement | null>(null);
@@ -97,13 +106,16 @@ export function usePlaneMarkmap() {
     const mm = refMm.current;
     if (!mm) return;
     const { root } = transformer.transform(value);
-    mm.setData(root);
     mm.options.autoFit = true;
     const timeout = setTimeout(() => {
+      import("katex").then((katex) => {
+        window.katex = katex;
+        mm.setData(root);
+      })
       document.querySelectorAll('.mkm-render pre code').forEach(block => {
         highlight.highlightElement(block as HTMLElement);
       })
-    }, 500)
+    }, 100)
     return () => clearTimeout(timeout)
   }, [value]);
 
@@ -113,6 +125,6 @@ export function usePlaneMarkmap() {
     refMm,
     markmap,
     value,
-    setValue
+    setValue,
   };
 }
