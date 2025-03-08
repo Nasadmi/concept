@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } fr
 import debounce from "just-debounce-it";
 import highlight from 'highlight.js'
 import 'highlight.js/styles/tokyo-night-dark.css';
+import 'katex/dist/katex.min.css';
 
 declare global {
   interface Window {
@@ -96,11 +97,13 @@ export function usePlaneMarkmap() {
   const markmap = useRef<Markmap | null>(null);
 
   useEffect(() => {
+    console.log(refSvg, refMm)
     if (!refSvg.current || refMm.current) return;
     const mm = Markmap.create(refSvg.current);
     refMm.current = mm;
     markmap.current = mm;
-  }, []);
+  }, [refSvg.current]);
+  
 
   useEffect(() => {
     const mm = refMm.current;
@@ -126,5 +129,6 @@ export function usePlaneMarkmap() {
     markmap,
     value,
     setValue,
+    renderToolBar,
   };
 }

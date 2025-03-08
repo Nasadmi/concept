@@ -1,0 +1,75 @@
+.view-info {
+  position: absolute;
+  left: 1%;
+  top: 73%;
+  padding: 10px;
+  background-color: var(--block-bg);
+  width: 400px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.view-info .desc h1,
+.view-info .desc h2 {
+  color: var(--text);
+}
+
+.view-info .desc h3 {
+  color: var(--border-bg);
+  margin: 5px 0;
+}
+
+.view-info .view-utils {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.view-info .view-utils button,
+.view-info .view-utils a {
+  font-size: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+}
+
+.view-info .view-utils a {
+  background-color: var(--border-bg);
+}
+
+.view-info .view-utils button {
+  background-color: var(--bg);
+  color: var(--text);
+  transition: all 250ms ease;
+}
+
+.view-info .view-utils button:hover {
+  color: #E3B341;
+}
+
+.view-info .view-utils button.starred {
+  color: #E3B341;
+}
+.view-info .view-utils button.starred:hover {
+  color: var(--text);
+}
+
+.view-info .view-utils a {
+  color: var(--bg);
+  transition: all 500ms ease;
+}
+
+.view-info .view-utils a:hover {
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+.viewer {
+  height: 99%;
+}

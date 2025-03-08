@@ -116,14 +116,15 @@ export const Markmaps = ({ markmaps, query, cmkm, dmkm, bearer }: {
                       </li>
                     </ul>
                   </div>
-                  {
-                    !query &&
-                      <ul className="mkm-utils">
-                        <li>
-                          <Link to={`/view/${mkm.id}`} className='utils-view'>
-                            <HiBookOpen />
-                          </Link>
-                        </li>
+                  <ul className="mkm-utils">
+                    <li>
+                      <Link to={`/view/${mkm.id}`} className='utils-view'>
+                        <HiBookOpen />
+                      </Link>
+                    </li>
+                    {
+                      !query &&
+                      <>
                         <li>
                           <Link to={`/edit/${mkm.id}`} onClick={(e) => {
                             e.preventDefault()
@@ -137,8 +138,9 @@ export const Markmaps = ({ markmaps, query, cmkm, dmkm, bearer }: {
                             <HiTrash />
                           </button>
                         </li>
-                      </ul>
+                      </>
                     }
+                  </ul>
                 </section>
                 ))
             }
