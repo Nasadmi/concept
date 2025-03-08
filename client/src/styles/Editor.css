@@ -21,6 +21,10 @@
   font-family: 'Ubuntu Mono';
 }
 
+.mkm-render *#text {
+  width: 20ch;
+}
+
 .mkm-toolbar .mm-toolbar {
   position: absolute;
   background-color: var(--bg);

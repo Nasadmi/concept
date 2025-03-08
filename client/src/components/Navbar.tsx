@@ -44,12 +44,12 @@ export function NavBar({ username }: { username: string }) {
       <ul className='menu'>
         <Link to="/search" className='maven_pro'>Explore</Link>
         <button className='btn-tab maven_pro' onClick={() => setTab('mkm')}>My Markmaps</button>
+        <button className='btn-tab maven_pro' onClick={() => setTab('starred')}>Favorites</button>
         <button className='btn-tab maven_pro' onClick={() => setTab('config')}>Configuration</button>
         <ThemeSelector />
         <button className='btn-logout maven_pro' onClick={handleLogout}>
           <HiLogout />
         </button>
-        
       </ul>
     </nav>
   )

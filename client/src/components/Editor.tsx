@@ -3,7 +3,7 @@ import { getCookie } from '../service/cookie.service';
 import { useEffect, useState, useRef } from 'react';
 import { MkmType } from '../types/markmap.interface';
 import { fetchingMarkmap } from '../service/fetch.service';
-import CodeMirror from '@uiw/react-codemirror';
+import CodeMirror, { EditorState } from '@uiw/react-codemirror';
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { tokyoNightStorm } from '@uiw/codemirror-theme-tokyo-night-storm'
 import { tokyoNightDay } from '@uiw/codemirror-theme-tokyo-night-day'
@@ -15,6 +15,7 @@ import { ThemeSelector } from './Theme';
 import { IoSaveSharp, IoSaveOutline, IoHelpOutline } from 'react-icons/io5';
 import { HiHome } from 'react-icons/hi';
 import { alert, toast } from '../service/alert.service';
+import { EditorView } from '@uiw/react-codemirror';
 
 export const Editor = () => {
   const stored = sessionStorage.getItem('editMkm')
@@ -110,8 +111,6 @@ export const Editor = () => {
       pub = arr?.find((pub) => pub.match(expPub))?.split('\n').find(pub => pub.match(expPub))?.split('--')[1].split(':')[1].trim();
       const encodedCode = encodeBase64(cleanCode)
 
-      console.log(cleanCode);
-
       if (!title || !pub) {
         toast.fire({
           text: 'Privacy or title has been removed, please re-add',
@@ -151,8 +150,8 @@ export const Editor = () => {
           timer: 1500,
         })
       })
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (_err) {
+      console.log(_err)
       toast.fire({
         text: 'Something went wrong, please check your code',
         icon: 'error'
@@ -170,9 +169,10 @@ export const Editor = () => {
               height='100vh'
               width='650px'
               theme={light ? tokyoNightDay : tokyoNightStorm}
-              extensions={[markdown({ base: markdownLanguage, codeLanguages: languages })]}
+              extensions={[markdown({ base: markdownLanguage, codeLanguages: languages }), EditorView.lineWrapping, EditorState.tabSize.of(2)]}
               className='maven_pro'
               onChange={handleChange}
+              indentWithTab
               autoFocus
             />
             <svg ref={refSvg} width='100%' height='300px' className='mkm-render'></svg>

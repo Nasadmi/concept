@@ -30,7 +30,6 @@ export const Viewer = () => {
         if (res.statusCode) {
           return;
         }
-        console.log(res)
         setStarred(res.starred)
         setMkm(res);
       });
@@ -61,6 +60,17 @@ export const Viewer = () => {
     }
   }, [markmap]);
 
+  useEffect(() => {
+    if (!mkm) return;
+    setMkm((prevState) => {
+      if (!prevState) return mkm;
+      return {
+        ...prevState,
+        stars: starred ? prevState.stars + 1 : prevState.stars - 1
+      }
+    });
+  }, [starred])
+
   const handleAddStars = () => {
     if (!mkm) return;
     fetchingMarkmap({
@@ -74,7 +84,8 @@ export const Viewer = () => {
       toast.fire({
         title: 'Added to favorites',
         position: 'bottom-right',
-        icon: 'success'
+        icon: 'success',
+        timer: 1500
       })
     })
   }
@@ -92,7 +103,8 @@ export const Viewer = () => {
       toast.fire({
         title: 'Removed from favorites',
         position: 'bottom-right',
-        icon: 'success'
+        icon: 'success',
+        timer: 1500
       })
     })
   }

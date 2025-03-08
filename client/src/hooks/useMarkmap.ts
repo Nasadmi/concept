@@ -97,7 +97,6 @@ export function usePlaneMarkmap() {
   const markmap = useRef<Markmap | null>(null);
 
   useEffect(() => {
-    console.log(refSvg, refMm)
     if (!refSvg.current || refMm.current) return;
     const mm = Markmap.create(refSvg.current);
     refMm.current = mm;

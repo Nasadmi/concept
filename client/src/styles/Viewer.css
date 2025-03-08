@@ -56,9 +56,6 @@
 .view-info .view-utils button.starred {
   color: #E3B341;
 }
-.view-info .view-utils button.starred:hover {
-  color: var(--text);
-}
 
 .view-info .view-utils a {
   color: var(--bg);
