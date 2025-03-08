@@ -28,6 +28,9 @@ export class UserEntity {
   @CreateDateColumn()
   created_at: Date;
 
-  @OneToMany(() => StarsEntity, (stars) => stars.user)
+  @OneToMany(() => StarsEntity, (stars) => stars.user, {
+    onDelete: 'CASCADE',
+    cascade: ['insert', 'update'],
+  })
   stars: StarsEntity[];
 }

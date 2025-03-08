@@ -9,9 +9,9 @@ export class StarsEntity {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @ManyToOne(() => UserEntity, (user) => user.stars)
+  @ManyToOne(() => UserEntity, (user) => user.stars, { onDelete: 'CASCADE' })
   user: UserEntity;
 
-  @ManyToOne(() => MarkmapEntity, (user) => user.stars)
+  @ManyToOne(() => MarkmapEntity, (mkm) => mkm.stars, { onDelete: 'CASCADE' })
   markmap: MarkmapEntity;
 }

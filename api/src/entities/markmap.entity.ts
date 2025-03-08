@@ -33,6 +33,9 @@ export class MarkmapEntity {
   @UpdateDateColumn()
   updated_at: Date;
 
-  @OneToMany(() => StarsEntity, (stars) => stars.markmap)
+  @OneToMany(() => StarsEntity, (stars) => stars.markmap, {
+    onDelete: 'CASCADE',
+    cascade: ['insert', 'update'],
+  })
   stars: StarsEntity[];
 }

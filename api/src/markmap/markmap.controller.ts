@@ -37,7 +37,7 @@ export class MarkmapController {
       throw new InternalServerErrorException('Something went wrong');
     }
 
-    return newMarkmap;
+    return { ...newMarkmap, stars: 0 };
   }
 
   @Get('query')
