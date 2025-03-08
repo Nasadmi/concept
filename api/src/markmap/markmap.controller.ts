@@ -13,11 +13,15 @@ import {
   Delete,
   HttpStatus,
   Query,
+  BadRequestException,
+  ConflictException,
 } from '@nestjs/common';
 import { MarkmapService } from './markmap.service';
 import { MarkmapDto, UpdateMarkmapDto } from 'src/dto/markmaps.dto';
 import { TokenGuard } from 'src/token/token.guard';
 import { MarkmapInterceptor } from './markmap.interceptor';
+import { UserEntity } from 'src/entities/user.entity';
+import { MarkmapEntity } from 'src/entities/markmap.entity';
 
 @Controller('markmap')
 export class MarkmapController {
@@ -78,6 +82,64 @@ export class MarkmapController {
     }
 
     return markmaps;
+  }
+
+  @Get('view/:id')
+  @UseGuards(TokenGuard)
+  async getViewMarkmap(
+    @Param('id') id: string,
+    @Headers('bearer') bearer: { id: string },
+  ) {
+    try {
+      const markmaps = await this.markmapService.viewMarkmap(id, bearer.id);
+      if (markmaps === null) throw new NotFoundException('Markmap not found');
+      if (markmaps === 0)
+        throw new InternalServerErrorException('Something went wrong');
+      return markmaps;
+    } catch (err) {
+      console.error(err);
+      throw new InternalServerErrorException('Something went wrong');
+    }
+  }
+
+  @Post('star/:id')
+  @UseGuards(TokenGuard)
+  async addStar(
+    @Headers('bearer') user: Pick<UserEntity, 'id'>,
+    @Param('id') markmap: Pick<MarkmapEntity, 'id'>,
+  ) {
+    try {
+      const saved = await this.markmapService.addStar({ user, markmap });
+      if (saved === 0)
+        throw new ConflictException('This user already starred this markmap');
+      if (saved === false) throw new BadRequestException('Some data fault');
+      return {
+        statusCode: 200,
+      };
+    } catch (err) {
+      console.error(err);
+      throw new InternalServerErrorException('Something went wrong');
+    }
+  }
+
+  @Delete('star/:id')
+  @UseGuards(TokenGuard)
+  async deleteStar(
+    @Headers('bearer') user: Pick<UserEntity, 'id'>,
+    @Param('id') markmap: Pick<MarkmapEntity, 'id'>,
+  ) {
+    try {
+      const saved = await this.markmapService.removeStar({ user, markmap });
+      if (saved === 0)
+        throw new ConflictException('This user already starred this markmap');
+      if (saved === false) throw new BadRequestException('Some data fault');
+      return {
+        statusCode: 200,
+      };
+    } catch (err) {
+      console.error(err);
+      throw new InternalServerErrorException('Something went wrong');
+    }
   }
 
   @Get('code/:id')

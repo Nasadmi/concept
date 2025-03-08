@@ -5,8 +5,10 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { UserEntity } from './user.entity';
+import { StarsEntity } from './stars.entity';
 
 @Entity({ name: 'markmap' })
 export class MarkmapEntity {
@@ -25,12 +27,12 @@ export class MarkmapEntity {
   @Column({ type: 'decimal', precision: 1, scale: 0, nullable: false })
   public: number;
 
-  @Column({ type: 'bigint', default: 0 })
-  stars: number;
-
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => StarsEntity, (stars) => stars.markmap)
+  stars: StarsEntity[];
 }

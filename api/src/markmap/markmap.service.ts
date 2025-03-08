@@ -3,12 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like } from 'typeorm';
 import { MarkmapEntity } from 'src/entities/markmap.entity';
 import { MarkmapDto, UpdateMarkmapDto } from 'src/dto/markmaps.dto';
+import { StarsEntity } from 'src/entities/stars.entity';
+import { StarsDTO } from 'src/dto/stars.dto';
 
 @Injectable()
 export class MarkmapService {
   constructor(
     @InjectRepository(MarkmapEntity)
     private readonly markmapRepository: Repository<MarkmapEntity>,
+    @InjectRepository(StarsEntity)
+    private readonly starsRepository: Repository<StarsEntity>,
   ) {}
 
   async createMarkmap(markmap: MarkmapDto) {
@@ -33,7 +37,7 @@ export class MarkmapService {
     orderStars: 'ASC' | 'DESC';
     orderDate: 'ASC' | 'DESC';
     username?: string;
-  }): Promise<MarkmapEntity[] | null | 0> {
+  }): Promise<Partial<MarkmapDto[]> | null | 0> {
     try {
       const founded = await this.markmapRepository.find({
         where: {
@@ -49,18 +53,15 @@ export class MarkmapService {
         },
         relations: {
           user: true,
+          stars: true,
         },
         order: {
-          stars: orderStars,
           created_at: orderDate,
         },
         take: 25,
         select: {
-          created_at: true,
-          name: true,
-          stars: true,
-          updated_at: true,
-          id: true,
+          code: false,
+          public: false,
           user: {
             username: true,
           },
@@ -69,10 +70,91 @@ export class MarkmapService {
       if (founded.length === 0) {
         return null;
       }
-      return founded;
+
+      console.log(founded);
+
+      const result = founded
+        .map((mkm) => ({
+          ...mkm,
+          stars: mkm.stars.length,
+        }))
+        .sort((a, b) => {
+          if (orderStars === 'DESC') {
+            return a.stars - b.stars;
+          } else {
+            return b.stars - a.stars;
+          }
+        });
+
+      return result;
     } catch (err) {
       console.error(err);
       return 0;
+    }
+  }
+
+  async viewMarkmap(id: string, user: string) {
+    try {
+      const starred = await this.starsRepository.findOne({
+        where: {
+          markmap: { id },
+          user: { id: user },
+        },
+      });
+      const markmap = await this.markmapRepository.findOne({
+        where: {
+          id: id,
+        },
+        relations: {
+          user: true,
+          stars: true,
+        },
+        select: {
+          public: false,
+          user: {
+            username: true,
+          },
+        },
+      });
+      if (!markmap) {
+        return null;
+      }
+      return {
+        ...markmap,
+        stars: markmap.stars.length,
+        starred: starred ? true : false,
+      };
+    } catch (err) {
+      console.error(err);
+      return 0;
+    }
+  }
+
+  async addStar(star: StarsDTO) {
+    try {
+      await this.starsRepository.save(star);
+      return true;
+    } catch (err) {
+      console.error(err);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (err.errno === 1062) {
+        return 0;
+      }
+      return false;
+    }
+  }
+
+  async removeStar(star: StarsDTO) {
+    try {
+      await this.starsRepository.delete(star);
+      return true;
+    } catch (err) {
+      console.error(err);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (err.errno === 1062) {
+        return 0;
+      }
+      return false;
     }
   }
 
@@ -80,15 +162,20 @@ export class MarkmapService {
     try {
       const founded = await this.markmapRepository.find({
         where: { user: { id: user } },
-        select: ['id', 'name', 'public', 'stars', 'created_at', 'updated_at'],
-        relations: { user: false },
+        select: ['id', 'name', 'public', 'created_at', 'updated_at'],
+        relations: { user: false, stars: true },
       });
 
       if (founded.length === 0) {
         return null;
       }
 
-      return founded;
+      const result = founded.map((mkm) => ({
+        ...mkm,
+        stars: mkm.stars.length,
+      }));
+
+      return result;
     } catch (err) {
       console.error(err);
       return 0;

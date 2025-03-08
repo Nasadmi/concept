@@ -6,6 +6,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { MarkmapEntity } from './markmap.entity';
+import { StarsEntity } from './stars.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity {
@@ -26,4 +27,7 @@ export class UserEntity {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @OneToMany(() => StarsEntity, (stars) => stars.user)
+  stars: StarsEntity[];
 }

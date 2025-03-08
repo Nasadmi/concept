@@ -11,6 +11,7 @@ import { render } from 'prettyjson';
 import { APP_PIPE } from '@nestjs/core';
 import { MarkmapModule } from './markmap/markmap.module';
 import { AppController } from './app.controller';
+import { StarsEntity } from './entities/stars.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { AppController } from './app.controller';
       username: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'concept',
-      entities: [UserEntity, MarkmapEntity],
+      entities: [UserEntity, MarkmapEntity, StarsEntity],
       synchronize: process.env.NODE_ENV === 'dev',
     }),
     JwtModule.register({
