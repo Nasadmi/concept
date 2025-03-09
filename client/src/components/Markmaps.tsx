@@ -11,7 +11,7 @@ import { fetchingMarkmap } from '../service/fetch.service'
 
 export const Markmaps = ({ markmaps, query, cmkm, dmkm, bearer }: { 
   markmaps: QMkmType[] | null, 
-  query?: true,
+  query?: boolean,
   cmkm?: CMkmFunc,
   dmkm?: (id: string) => void,
   bearer?: string
@@ -76,6 +76,7 @@ export const Markmaps = ({ markmaps, query, cmkm, dmkm, bearer }: {
               !query && <NewMarkmap exec={cmkm}/>
             }
             {
+              markmaps.length > 0 &&
               markmaps.map((mkm) => (
                 <section key={mkm.id} className='mkm-sec maven_pro' onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{
                   height: `${!query ? '' : ''}`,

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { fetchingUser, fetchingMarkmap } from '../service/fetch.service'
 import { UserInterface } from '../types/user.interface';
-import { CMkmFunc, MkmType } from '../types/markmap.interface';
+import { CMkmFunc, MkmType, QMkmType } from '../types/markmap.interface';
 import { TabContext } from '../context/Tab.context';
 import { NavBar } from './Navbar';
 import { Markmaps } from './Markmaps';
@@ -13,10 +13,15 @@ import '../styles/HomeUser.css';
 export function HomeUser({ token }: { token: string }) {
   const [info, setInfo] = useState<Pick<UserInterface, 'created_at' | 'username' | 'id' > | null>(null);
   const [mkm, setMkm] = useState<MkmType[] | null>(null);
+  const [fav, setFav] = useState<QMkmType[] | null>(null);
   const loadedMkm = useRef<MkmType[] | null>(sessionStorage.getItem('loadedMkm') ? 
   (JSON.parse(sessionStorage.getItem('loadedMkm') as string).statusCode ? [] : JSON.parse(sessionStorage.getItem('loadedMkm') as string)) 
   : null);
   const loadedInfo = useRef<Pick<UserInterface, 'created_at' | 'username' | 'id' > | null>(sessionStorage.getItem('loadedInfo') ? JSON.parse(sessionStorage.getItem('loadedInfo') as string) : null)
+  const loadedFav = useRef<QMkmType[] | null>(sessionStorage.getItem('loadedFav') ? 
+  (JSON.parse(sessionStorage.getItem('loadedFav') as string).statusCode ? [] : JSON.parse(sessionStorage.getItem('loadedFav') as string)) 
+  : null);
+
   const tabctx = useContext(TabContext);
   const filterctx = useContext(FilterContext);
 
@@ -92,6 +97,7 @@ export function HomeUser({ token }: { token: string }) {
   }, [token])
 
   useEffect(() => {
+    document.title = 'Concept'
     if (tab === 'mkm' && loadedMkm.current) {
       setMkm(loadedMkm.current);
     }
@@ -114,6 +120,29 @@ export function HomeUser({ token }: { token: string }) {
         console.error(err);
       })
     }
+
+    if (tab === 'starred' && loadedFav.current) {
+      setFav(loadedFav.current)
+    }
+
+    if (!loadedFav.current) {
+      fetchingMarkmap({
+        url: 'fav',
+        bearer: token,
+        method: 'GET'
+      })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.statusCode === 404) {
+          setFav(null);
+        }
+        setFav(res);
+        sessionStorage.setItem('loadedFav', JSON.stringify(res));
+      })
+      .catch(err => {
+        console.error(err);
+      })
+    }
   }, [tab, token])
   return (
     <>
@@ -122,7 +151,9 @@ export function HomeUser({ token }: { token: string }) {
           <>
             <NavBar username={info.username} />
             {
-              tab === 'mkm' ?
+              tab === 'config' ?
+                <Configuration />
+              :
               <>
                 <div id="container-home-user">
                   <Filter styles={{
@@ -131,20 +162,33 @@ export function HomeUser({ token }: { token: string }) {
                     top: -10,
                     left: 50,
                     origin: 'left'
-                  }}/>
+                  }} />
                 </div>
-                <Markmaps markmaps={mkm && (
-                [...mkm]
-                .filter(m => Number(m.stars) >= stars)
-                .sort((a,b) => (
-                  date === 'asc-date' ?
-                    new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                {
+                  tab === 'mkm' ?
+                  <Markmaps markmaps={mkm && (
+                    [...mkm]
+                      .filter(m => Number(m.stars) >= stars)
+                      .sort((a, b) => (
+                        date === 'asc-date' ?
+                          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                          :
+                          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+                      ))
+                  )} cmkm={handleCMkm} dmkm={handleDMkm} bearer={token}/>
                   :
-                    new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-                ))
-              )} cmkm={handleCMkm} dmkm={handleDMkm} bearer={token} />
-              </> :
-              <Configuration />
+                  <Markmaps markmaps={fav && (
+                    [...fav]
+                      .filter(m => Number(m.stars) >= stars)
+                      .sort((a, b) => (
+                        date === 'asc-date' ?
+                          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+                          :
+                          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+                      ))
+                  )} query/>
+                }
+              </>
             }
           </>
       }

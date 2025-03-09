@@ -47,6 +47,7 @@ export const Viewer = () => {
 
   useEffect(() => {
     if (!mkm || !katexLoaded) return;
+    document.title = `Concept | Viewing: ${mkm.name}`
     markmap.setValue(`---\ntitle: ${mkm.name}\nmarkmap:\n  colorFreezeLevel: 2\n  maxWidth: 450\n---\n\n${mkm.code === '_' ? '' : decodeBase64(mkm.code || '')}`);
   }, [mkm, markmap]);
 
@@ -81,6 +82,7 @@ export const Viewer = () => {
     .then((res) => {
       if (res.statusCode !== 200) return;
       setStarred(true);
+      sessionStorage.removeItem('loadedFav')
       toast.fire({
         title: 'Added to favorites',
         position: 'bottom-right',
@@ -100,6 +102,7 @@ export const Viewer = () => {
     .then((res) => {
       if (res.statusCode !== 200) return;
       setStarred(false);
+      sessionStorage.removeItem('loadedFav')
       toast.fire({
         title: 'Removed from favorites',
         position: 'bottom-right',

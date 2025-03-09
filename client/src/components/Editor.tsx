@@ -35,6 +35,7 @@ export const Editor = () => {
   useEffect(() => {
     if (mkm) {
       const decoded = decodeBase64(mkm.code || '')
+      document.title = `Concept | Editing: ${mkm.name}`
       handleChange(decoded);
       setCode(decoded)
       setConfig(`---\ntitle: ${mkm.name} \nmarkmap:\n  colorFreezeLevel: 2\n  maxWidth: 450\n---\n<!--Privacy: ${Number(mkm.pub) === 0 ? 'Private' : 'Public'}-->\n\n`)
@@ -73,27 +74,6 @@ export const Editor = () => {
       observer.disconnect();
     };
   }, []);
-
-  useEffect(() => {
-    if (!code || !mkm?.code || !config) return;
-
-    const arr = code.split('---');
-
-    const header = `${value.split('-->')[0]}-->`.trim();
-
-    if (!arr[arr.length - 1]?.includes('-->')) {
-      setSaved(true);
-      return;
-    }
-
-    const cleanCode = arr[arr.length - 1].split('-->')[1].trim()
-
-    if (cleanCode === decodeBase64(mkm.code.trim()) && header.trim() === `${config.split('-->')[0]}-->`.trim()) {
-      setSaved(true);
-    } else {
-      setSaved(false);
-    }
-  }, [code, value]);
 
   const handleSaved = () => {
     try {
@@ -158,6 +138,32 @@ export const Editor = () => {
       })
     }
   }
+
+  useEffect(() => {
+    if (!code || !mkm?.code || !config) return;
+
+    const arr = code.split('---');
+
+    const header = `${value.split('-->')[0]}-->`.trim();
+
+    if (!arr[arr.length - 1]?.includes('-->')) {
+      setSaved(true);
+      return;
+    }
+
+    const cleanCode = arr[arr.length - 1].split('-->')[1].trim()
+
+    if (cleanCode === decodeBase64(mkm.code.trim()) && header.trim() === `${config.split('-->')[0]}-->`.trim()) {
+      setSaved(true);
+    } else {
+      setSaved(false);
+      console.log('timeout')
+      const timeout = setTimeout(() => {
+        handleSaved()
+      }, 5000)
+      return () => clearTimeout(timeout);
+    }
+  }, [code, value]);
 
   return (
     <>

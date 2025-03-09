@@ -32,6 +32,8 @@ export function NavBar({ username }: { username: string }) {
         sessionStorage.removeItem('foundedMkm');
         sessionStorage.removeItem('loadedInfo');
         sessionStorage.removeItem('loadedMkm');
+        sessionStorage.removeItem('loadedFav');
+        sessionStorage.removeItem('editingMkm')
         removeCookie('bearer');
         window.location.replace('/login');
       }

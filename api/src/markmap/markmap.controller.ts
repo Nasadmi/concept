@@ -84,6 +84,19 @@ export class MarkmapController {
     return markmaps;
   }
 
+  @Get('fav')
+  @UseGuards(TokenGuard)
+  async getStarredMarkmapFromUser(@Headers('bearer') bearer: { id: string }) {
+    const markmap = await this.markmapService.getStarredMarkmapOfUser(
+      bearer.id,
+    );
+
+    if (markmap === null) throw new NotFoundException('No starred markmaps');
+    if (markmap === 0)
+      throw new InternalServerErrorException('Something went wrong');
+    return markmap;
+  }
+
   @Get('view/:id')
   @UseGuards(TokenGuard)
   async getViewMarkmap(

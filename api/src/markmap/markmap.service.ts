@@ -182,6 +182,41 @@ export class MarkmapService {
     }
   }
 
+  async getStarredMarkmapOfUser(user: string) {
+    try {
+      const founded = await this.markmapRepository.find({
+        relations: ['stars', 'user'],
+        where: {
+          stars: {
+            user: {
+              id: user,
+            },
+          },
+        },
+        select: {
+          user: {
+            username: true,
+          },
+        },
+      });
+      console.log(founded);
+
+      if (founded.length === 0) return null;
+      const result = founded
+        .map((mkm) => ({
+          ...mkm,
+          stars: mkm.stars.length,
+        }))
+        .sort((a, b) => {
+          return b.stars - a.stars;
+        });
+      return result;
+    } catch (err) {
+      console.error(err);
+      return 0;
+    }
+  }
+
   async editMarkmap(user: string, id: string) {
     try {
       const mkm = await this.markmapRepository.findOneBy({
